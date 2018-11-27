@@ -34,7 +34,10 @@ namespace UnionExcelFiles
                 _tmp.Add(ExcelList.Last().ExcelTable);
             }
 
-            Console.WriteLine("Порядо объединения соблюден?Если нет, просто закройте программу, если да, нажмите на любую клавишу");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Важно отметить, что начиная со 2го файла, 1я строка в документе пропускается.\r\nСчитается что там описание полей.");
+            Console.ResetColor();
+            Console.WriteLine("Порядок объединения соблюден?\r\nЕсли нет - просто закройте программу\r\nЕсли да - нажмите на любую клавишу");
             Console.ReadKey();
             int cursorRowIndex = 0;
             int offsetRow = 0;
@@ -50,13 +53,17 @@ namespace UnionExcelFiles
                     {
                         for (int row = 1; row < ExcelList[i].ExcelTable.GetLength(0); row++)
                         {
+                            if (i != 0 && row == 1)
+                            {
+                                row++;
+                            }
                             for (int column = 1; column < ExcelList[i].ExcelTable.GetLength(1); column++)
                             {
                                 eWs.Cells[row + offsetRow, column].Value = ExcelList[i].ExcelTable[row - 1, column - 1];
                             }
                         }
 
-                        offsetRow += ExcelList[i].ExcelTable.GetLength(0);
+                        offsetRow += ExcelList[i].ExcelTable.GetLength(0)-2;//-2 чтоб пропустить 2 пустые строки, чтоб инфо шло друг-за-другом
                     }
 
                     string nameUnionExcel = "UnionExcel.xlsx";
