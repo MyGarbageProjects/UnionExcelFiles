@@ -20,7 +20,7 @@ namespace UnionExcelFiles
         static void Main(string[] args)
         {
             List<string[,]> _tmp = new List<string[,]>();
-            Console.Write("Введите название папки в которой находятся файлы:");
+            Console.Write("Введите название папки в которой находятся файлы: ");
             string folder = Console.ReadLine();
             pathFolder += folder;
             DirectoryInfo di = new DirectoryInfo(pathFolder);
